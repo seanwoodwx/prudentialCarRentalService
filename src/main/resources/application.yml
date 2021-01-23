@@ -1,0 +1,12 @@
+
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://10.0.7.89:3306/fund_hub?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC #url
+    username: p2p_dev
+    password: p2p_dev
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.example.test.bean
