@@ -32,18 +32,21 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Resource
+    @Autowired
     CarService carService;
 
-    @Resource
+    @Autowired
     UserCarService userCarService;
 
     @RequestMapping(value = "/mine")
     public String mine(HttpServletRequest request, ModelMap modelMap){
-
+        UserBean userBean;
+        if((userBean = userService.checkUser(request)) == null) {
+            return "login";
+        }
         List<CarBean> carList =  carService.getAllCar();
 
-        List<UserCarBean> userCarList =  userCarService.getAllUserCar(1);
+        List<UserCarBean> userCarList =  userCarService.getAllUserCar(userBean.getId());
 
         Map<Integer, Integer> carNumMap = new HashMap<>();
         for(UserCarBean userCar: userCarList) {
@@ -51,7 +54,6 @@ public class UserController {
         }
 
         modelMap.addAttribute("carList", carList);
-
         modelMap.addAttribute("carNumMap", carNumMap);
 
         return "mine";

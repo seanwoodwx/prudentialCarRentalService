@@ -16,6 +16,8 @@ public interface CarMapper {
 
     List<CarBean> getAllCar();
 
+    CarBean getOne(int carId);
+
     int rentCar(int carId);
 
     int returnCar(int carId);

@@ -1,8 +1,11 @@
 package com.example.test.controller;
 
+import com.example.test.bean.CarBean;
+import com.example.test.bean.UserBean;
 import com.example.test.bean.UserCarBean;
 import com.example.test.service.CarService;
 import com.example.test.service.UserCarService;
+import com.example.test.service.UserService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,25 +27,36 @@ import java.util.Map;
  */
 @Controller
 public class CarController {
-    @Resource
+    @Autowired
     CarService carService;
 
-    @Resource
+    @Autowired
     UserCarService userCarService;
+
+    @Autowired
+    UserService userService;
+
 
     @Transactional
     @RequestMapping(value = "/rentCar",method = RequestMethod.POST)
     @ResponseBody
     public Map rentCar(Integer carId, Integer userId, HttpServletRequest request){
+        UserBean userBean;
+        if((userBean = userService.checkUser(request)) == null) {
+            throw new InternalException("用户未登录");
+        }
         Map<String,Object> map = new HashMap<>();
-
+        CarBean car = carService.getOne(carId);
+        if(car == null || car.getCurrentCount() <= 0) {
+            throw new InternalException("无此车辆，不能再借");
+        }
         carService.rentCar(carId);
         UserCarBean userCar;
-        userCar = userCarService.getUserCar(1, carId);
+        userCar = userCarService.getUserCar(userBean.getId(), carId);
         if(userCar == null) {
             userCar = new UserCarBean();
             userCar.setCarId(carId);
-            userCar.setUserId(1);
+            userCar.setUserId(userBean.getId());
             userCar.setCount(1);
             userCarService.insertUserCar(userCar);
         } else {
@@ -60,17 +73,19 @@ public class CarController {
     @RequestMapping(value = "/returnCar",method = RequestMethod.POST)
     @ResponseBody
     public Map returnCar(Integer carId, Integer userId, HttpServletRequest request){
+        UserBean userBean;
+        if((userBean = userService.checkUser(request)) == null) {
+            throw new InternalException("用户未登录");
+        }
         Map<String,Object> map = new HashMap<>();
-
-        carService.returnCar(carId);
-        UserCarBean userCar;
-        userCar = userCarService.getUserCar(1, carId);
-        if(userCar == null) {
-            throw new InternalException("该用户无租借历史");
+        UserCarBean userCar = userCarService.getUserCar(userBean.getId(), carId);
+        if(userCar == null || userCar.getCount() < 0 ) {
+            throw new InternalException("该用户未租借此车");
         } else {
             userCar.setCount(userCar.getCount() - 1);
             userCarService.updateUserCar(userCar);
         }
+        carService.returnCar(carId);
 
         map.put("msg","归还成功");
         map.put("ret","0");

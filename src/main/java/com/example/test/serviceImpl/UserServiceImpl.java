@@ -6,6 +6,8 @@ import com.example.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -39,6 +41,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserBean queryUserById(String id) {
         return userMapper.selectUserById(id);
+    }
+
+    @Override
+    public UserBean checkUser(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("userId");
+        if(userId == null) {
+            return null;
+        }
+        UserBean userBean = userMapper.selectUserById(userId);
+        return userBean;
     }
 
 

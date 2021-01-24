@@ -24,10 +24,15 @@ public class LoginController {
 
     @RequestMapping(value = "/loginIn",method = RequestMethod.POST)
     public String login(String name,String password, HttpServletRequest request){
+
+        if(userService.checkUser(request) != null) {
+            return "mine";
+        }
         UserBean userBean = userService.loginIn(name,password);
         if(userBean!=null){
             HttpSession session = request.getSession();
             session.setAttribute("username", name);
+            session.setAttribute("userId", String.valueOf(userBean.getId()));
             return "success";
         }else {
             return "error";
@@ -35,10 +40,14 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value = "/loginOut",method = RequestMethod.POST)
-    public String loginOut(UserBean userBean, HttpServletRequest request){
+    @RequestMapping(value = "/logOut",method = RequestMethod.POST)
+    public String logOut(UserBean userBean, HttpServletRequest request){
+        if(userService.checkUser(request) == null) {
+            return "login";
+        }
         HttpSession session = request.getSession();
         session.removeAttribute("username");
+        session.removeAttribute("userId");
         userService.loginOut(userBean);
         return "index";
     }

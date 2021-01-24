@@ -8,6 +8,12 @@
     </select>
 
     <!--根据ID查询用户信息-->
+    <select id="getOne" parameterType="Integer" resultType="com.example.test.bean.CarBean">
+      SELECT * FROM car
+        WHERE id = #{carId};
+    </select>
+
+    <!--根据ID查询用户信息-->
     <update id="rentCar" parameterType="Integer">
     UPDATE car
         SET currentCount = currentCount - 1

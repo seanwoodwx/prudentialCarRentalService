@@ -28,7 +28,7 @@
         <tbody>
         <tr th:each="car : ${carList}">
             <td th:text="${car.name}"></td>
-            <td th:text="${carNumMap[car.id]}"></td>
+            <td th:text="${carNumMap[car.id] == null ? 0: carNumMap[car.id]}"></td>
             <td th:text="${car.currentCount}"></td>
             <td>
                 <button class="rent" th:carId=" ${car.id}">租借</button>
@@ -52,8 +52,12 @@
             data: param,    //请求参数
             async: true,    //是否异步
             success: function f(result) {
-                window.confirm(result.msg); //新增用户成功提示框
+                window.alert(result.msg); //新增用户成功提示框
                 location.reload();    //重新加载界面，同步数据库信息
+            },
+            error: function(xhr) {
+                var result = JSON.parse(xhr.responseText);
+                window.alert(result.message); //新增用户成功提示框
             }
         });
     });
@@ -68,8 +72,12 @@
             data: param,    //请求参数
             async: true,    //是否异步
             success: function f(result) {
-                window.confirm(result.msg); //新增用户成功提示框
+                window.alert(result.msg); //新增用户成功提示框
                 location.reload();    //重新加载界面，同步数据库信息
+            },
+            error: function(xhr) {
+                var result = JSON.parse(xhr.responseText);
+                window.alert(result.message); //新增用户成功提示框
             }
         });
     });

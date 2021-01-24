@@ -26,6 +26,11 @@ public class CarServiceImpl implements CarService {
         return carMapper.getAllCar();
     }
 
+    public CarBean getOne(int carId) {
+        return carMapper.getOne(carId);
+    }
+
+
     public int  rentCar(int carId) {
         return carMapper.rentCar(carId);
     }
