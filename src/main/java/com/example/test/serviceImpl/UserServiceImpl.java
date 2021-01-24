@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.getInfo(name,password);
     }
 
+    @Override
+    public boolean loginOut(UserBean userBean) {
+        return true;
+    }
+
     /**
      * 根据ID查询用户信息
      * @param id

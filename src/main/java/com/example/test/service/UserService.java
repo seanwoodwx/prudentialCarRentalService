@@ -9,6 +9,9 @@ public interface UserService {
     //登录时信息核对
     UserBean loginIn(String name,String password);
 
+    //登出
+    boolean loginOut(UserBean userBean);
+
     //根据ID查询用户信息
     UserBean queryUserById(String id);
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.test.mapper.CarMapper">
+
+    <!--验证用户账号和密码-->
+    <select id="getAllCar" resultType="com.example.test.bean.CarBean">
+        SELECT * FROM car;
+    </select>
+
+    <!--根据ID查询用户信息-->
+    <update id="rentCar" parameterType="Integer">
+    UPDATE car
+        SET currentCount = currentCount - 1
+        WHERE id = #{carId};
+    </update>
+
+    <!--插入新用户信息，ID是自动生成的,返回数据库操作影响行数，为0则是失败-->
+
+    <update id="returnCar" parameterType="Integer">
+    UPDATE car
+        SET currentCount = currentCount + 1
+        WHERE id = #{carId};
+    </update>
+</mapper>
