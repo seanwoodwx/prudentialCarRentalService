@@ -6,11 +6,18 @@
     <title>login</title>
 </head>
 <body>
-    <form role="form" action = "/loginIn" method="post">
-        账号：<input type="text" id="name" name = "name"> <br>
-        密码：<input type="password" id = "password" name = "password"> <br>
-        <input type="submit" id = "login" value = "login">
+<div class="card" style="width: 50rem; margin:0 auto;">
+    <form role="form" action = "/apiLogin" method="post">
+        <div class="form-group">
+            <label for="name">Account</label>
+            <input type="text" class="form-control" id="name" name = "name">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control"  id = "password" name = "password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-
+    </div>
 </body>
 </html>

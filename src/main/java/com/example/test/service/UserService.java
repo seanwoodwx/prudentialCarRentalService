@@ -9,9 +9,7 @@ public interface UserService {
 
     UserBean checkUser(HttpServletRequest request);
 
-    UserBean loginIn(String name,String password);
-
-    boolean loginOut(UserBean userBean);
+    UserBean login(String name,String password);
 
     UserBean queryUserById(String id);
 

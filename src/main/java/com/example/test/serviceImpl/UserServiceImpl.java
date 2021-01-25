@@ -17,14 +17,10 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public UserBean loginIn(String name, String password) {
+    public UserBean login(String name, String password) {
         return userMapper.getInfo(name,password);
     }
 
-    @Override
-    public boolean loginOut(UserBean userBean) {
-        return true;
-    }
 
     @Override
     public UserBean queryUserById(String id) {

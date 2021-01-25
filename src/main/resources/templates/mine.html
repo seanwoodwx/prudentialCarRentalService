@@ -12,14 +12,19 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="container">
+    <form class="d-flex">
+        <button class="btn btn-outline-success" id="logout">退出</button>
+    </form>
+</div>
 <div id = "selectResult">
     <table class="table table-dark table-hover">
         <thead>
         <tr>
-            <th>车名</th>
-            <th>租借数量</th>
-            <th>可租数量</th>
-            <th>操作</th>
+            <th>car name</th>
+            <th>rented car numbers</th>
+            <th>left car numbers</th>
+            <th>operation</th>
         </tr>
         </thead>
         <tbody>
@@ -28,8 +33,8 @@
             <td th:text="${carNumMap[car.id] == null ? 0: carNumMap[car.id]}"></td>
             <td th:text="${car.currentCount}"></td>
             <td>
-                <button class="rent" th:carId=" ${car.id}">租借</button>
-                <button class="return" th:carId="${car.id}">归还</button>
+                <button class="rent" th:carId=" ${car.id}">rent</button>
+                <button class="return" th:carId="${car.id}">return</button>
             </td>
         </tr>
         </tbody>
@@ -44,17 +49,17 @@
             "carId": obj.attr("carId")
         };
         $.ajax({
-            url:"/rentCar", //请求url
+            url:"/apiRentCar",
             method:'post',
-            data: param,    //请求参数
-            async: true,    //是否异步
+            data: param,
+            async: true,
             success: function f(result) {
-                window.alert(result.msg); //新增用户成功提示框
-                location.reload();    //重新加载界面，同步数据库信息
+                window.alert(result.msg);
+                location.reload();
             },
             error: function(xhr) {
                 var result = JSON.parse(xhr.responseText);
-                window.alert(result.message); //新增用户成功提示框
+                window.alert(result.message);
             }
         });
     });
@@ -64,17 +69,34 @@
             "carId": obj.attr("carId")
         };
         $.ajax({
-            url:"/returnCar", //请求url
+            url:"/apiReturnCar",
             method:'post',
-            data: param,    //请求参数
-            async: true,    //是否异步
+            data: param,
+            async: true,
             success: function f(result) {
-                window.alert(result.msg); //新增用户成功提示框
-                location.reload();    //重新加载界面，同步数据库信息
+                window.alert(result.msg);
+                location.reload();
             },
             error: function(xhr) {
                 var result = JSON.parse(xhr.responseText);
-                window.alert(result.message); //新增用户成功提示框
+                window.alert(result.message);
+            }
+        });
+    });
+    $("body").delegate('#logout', 'click', function(){
+        var obj = $(this);
+        $.ajax({
+            url:"/apiLogout",
+            method:'post',
+            data: {},
+            async: true,
+            success: function f(result) {
+                window.alert(result.msg);
+                location.href = '/index';
+            },
+            error: function(xhr) {
+                var result = JSON.parse(xhr.responseText);
+                window.alert(result.message);
             }
         });
     });

@@ -31,9 +31,9 @@ public class CarController {
 
 
     @Transactional
-    @RequestMapping(value = "/rentCar",method = RequestMethod.POST)
+    @RequestMapping(value = "/apiRentCar",method = RequestMethod.POST)
     @ResponseBody
-    public Map rentCar(Integer carId, Integer userId, HttpServletRequest request){
+    public Map ApiRentCar(Integer carId, HttpServletRequest request){
         //judge login state
         UserBean userBean;
         if((userBean = userService.checkUser(request)) == null) {
@@ -65,9 +65,9 @@ public class CarController {
     }
 
     @Transactional
-    @RequestMapping(value = "/returnCar",method = RequestMethod.POST)
+    @RequestMapping(value = "/apiReturnCar",method = RequestMethod.POST)
     @ResponseBody
-    public Map returnCar(Integer carId, Integer userId, HttpServletRequest request){
+    public Map ApiReturnCar(Integer carId, HttpServletRequest request){
         //judge login state
         UserBean userBean;
         if((userBean = userService.checkUser(request)) == null) {
