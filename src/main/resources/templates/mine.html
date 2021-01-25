@@ -14,7 +14,8 @@
 <body>
 <div class="container">
     <form class="d-flex">
-        <button class="btn btn-outline-success" id="logout">退出</button>
+        <a class="navbar-brand" href="#" th:text="${session.username}"></a>
+        <button class="btn btn-outline-success" id="logout">logout</button>
     </form>
 </div>
 <div id = "selectResult">
