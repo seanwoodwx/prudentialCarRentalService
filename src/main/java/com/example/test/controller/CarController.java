@@ -58,7 +58,7 @@ public class CarController {
             userCar.setCount(userCar.getCount() + 1);
             userCarService.updateUserCar(userCar);
         }
-        map.put("msg","succeed!");
+        map.put("msg","rent succeed!");
         map.put("ret","0");
         return map;
 
@@ -84,7 +84,7 @@ public class CarController {
         }
         carService.returnCar(carId);
 
-        map.put("msg","succeed!");
+        map.put("msg","return succeed!");
         map.put("ret","0");
         return map;
     }
