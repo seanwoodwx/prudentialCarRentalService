@@ -19,13 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @功能名称:
- * @Date: 2021-01-24
- * @Author: wuxuan
- * @Copyright（C）: 2014-2021 X-Financial Inc.   All rights reserved.
- * 注意：本内容仅限于小赢科技有限责任公司内部传阅，禁止外泄以及用于其他的商业目的。
- */
 @Controller
 public class UserController {
 
@@ -40,12 +33,13 @@ public class UserController {
 
     @RequestMapping(value = "/mine")
     public String mine(HttpServletRequest request, ModelMap modelMap){
+        //judge login state
         UserBean userBean;
         if((userBean = userService.checkUser(request)) == null) {
             return "login";
         }
+        //count car numbers
         List<CarBean> carList =  carService.getAllCar();
-
         List<UserCarBean> userCarList =  userCarService.getAllUserCar(userBean.getId());
 
         Map<Integer, Integer> carNumMap = new HashMap<>();

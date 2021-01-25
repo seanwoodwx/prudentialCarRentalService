@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
-    //将Service注入Web层
     @Autowired
     UserService userService;
 

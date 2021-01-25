@@ -18,13 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @功能名称:
- * @Date: 2021-01-24
- * @Author: wuxuan
- * @Copyright（C）: 2014-2021 X-Financial Inc.   All rights reserved.
- * 注意：本内容仅限于小赢科技有限责任公司内部传阅，禁止外泄以及用于其他的商业目的。
- */
 @Controller
 public class CarController {
     @Autowired
@@ -41,14 +34,16 @@ public class CarController {
     @RequestMapping(value = "/rentCar",method = RequestMethod.POST)
     @ResponseBody
     public Map rentCar(Integer carId, Integer userId, HttpServletRequest request){
+        //judge login state
         UserBean userBean;
         if((userBean = userService.checkUser(request)) == null) {
-            throw new InternalException("用户未登录");
+            throw new InternalException("please login");
         }
         Map<String,Object> map = new HashMap<>();
+        //judge car num
         CarBean car = carService.getOne(carId);
         if(car == null || car.getCurrentCount() <= 0) {
-            throw new InternalException("无此车辆，不能再借");
+            throw new InternalException("no car left");
         }
         carService.rentCar(carId);
         UserCarBean userCar;
@@ -63,7 +58,7 @@ public class CarController {
             userCar.setCount(userCar.getCount() + 1);
             userCarService.updateUserCar(userCar);
         }
-        map.put("msg","租借成功");
+        map.put("msg","succeed!");
         map.put("ret","0");
         return map;
 
@@ -73,21 +68,23 @@ public class CarController {
     @RequestMapping(value = "/returnCar",method = RequestMethod.POST)
     @ResponseBody
     public Map returnCar(Integer carId, Integer userId, HttpServletRequest request){
+        //judge login state
         UserBean userBean;
         if((userBean = userService.checkUser(request)) == null) {
-            throw new InternalException("用户未登录");
+            throw new InternalException("please login");
         }
         Map<String,Object> map = new HashMap<>();
+        //judge whether user has rented this car
         UserCarBean userCar = userCarService.getUserCar(userBean.getId(), carId);
         if(userCar == null || userCar.getCount() < 0 ) {
-            throw new InternalException("该用户未租借此车");
+            throw new InternalException("you didn't rent this car");
         } else {
             userCar.setCount(userCar.getCount() - 1);
             userCarService.updateUserCar(userCar);
         }
         carService.returnCar(carId);
 
-        map.put("msg","归还成功");
+        map.put("msg","succeed!");
         map.put("ret","0");
         return map;
     }
