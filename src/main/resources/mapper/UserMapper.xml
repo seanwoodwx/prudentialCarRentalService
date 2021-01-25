@@ -23,13 +23,13 @@
             (#{name},#{password},#{role});
     </insert>
 
-    <!--根据ID删除用户，返回数据库操作影响行数，为0则是失败-->
+    <!--delete user-->
     <delete id="deleteUser" parameterType="String">
         DELETE FROM user
         WHERE id = #{id};
     </delete>
 
-    <!--根据ID修改用户信息，返回数据库操作影响行数，为0则是失败-->
+    <!--update user-->
     <update id="updateUser" parameterType="com.example.test.bean.UserBean">
         UPDATE user
         SET password = #{password},
@@ -38,7 +38,7 @@
         WHERE id = #{id};
     </update>
 
-    <!--查询所有用户信息，返回一个List<Bean>-->
+    <!--select all users-->
     <select id="getAllUser" resultType="com.example.test.bean.UserBean">
         SELECT * FROM user ;
     </select>

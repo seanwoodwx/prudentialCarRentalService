@@ -1,18 +1,3 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : 10085
-Source Server Version : 50726
-Source Host           : localhost:3306
-Source Database       : test
-
-Target Server Type    : MYSQL
-Target Server Version : 50726
-File Encoding         : 65001
-
-Date: 2020-03-13 10:12:20
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -48,7 +33,7 @@ CREATE TABLE `car` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of user
+-- Records of car
 -- ----------------------------
 INSERT INTO `car` VALUES ('1', 'Toyota Camry', '2', '1');
 INSERT INTO `car` VALUES ('2', 'BMW 650', '2', '2');
@@ -64,6 +49,6 @@ CREATE TABLE `user_car` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of user
+-- Records of user_car
 -- ----------------------------
 INSERT INTO `user_car` VALUES ('1', '1', '1');
